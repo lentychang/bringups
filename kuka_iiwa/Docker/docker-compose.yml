@@ -1,7 +1,7 @@
 version: '2'
 services:
   iiwa-stack :
-    image: ros-docker-base
+    image: iiwa_stack
     environment:
      # ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -11,7 +11,6 @@ services:
     network_mode: host
     volumes:
       - $HOME/exchange:/root/exchange
-      - $HOME/Volume/iiwa_stack:/root/catkin_ws/src/iiwa_stack
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
     privileged: true
