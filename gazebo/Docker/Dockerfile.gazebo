@@ -1,0 +1,22 @@
+ARG DOCKER_BASE_IMAGE=ros-docker-base
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+
+RUN cd /root && \ 
+    curl -sSL http://get.gazebosim.org | sh
+#RUN cd /root && \   
+#    gazebo
+RUN apt-get update && \
+    apt-get install -y ros-${ROS_DISTRO}-gazebo9-ros-pkgs ros-${ROS_DISTRO}-gazebo9-ros-control
+RUN apt-get install -y ros-${ROS_DISTRO}-controller-manager ros-${ROS_DISTRO}-ompl
+RUN apt-get install -y ros-${ROS_DISTRO}-pr2-mechanism ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-ros-controllers
+RUN apt-get install -y ros-${ROS_DISTRO}-rqt-plot ros-${ROS_DISTRO}-rqt-graph \
+                       ros-${ROS_DISTRO}-rqt-rviz ros-${ROS_DISTRO}-rqt-tf-tree 
+RUN apt-get install -y ros-${ROS_DISTRO}-joint-state-controller ros-${ROS_DISTRO}-joint-trajectory-controller ros-${ROS_DISTRO}-rqt \
+                       ros-${ROS_DISTRO}-rqt-controller-manager ros-${ROS_DISTRO}-rqt-joint-trajectory-controller \
+                       ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-rqt-gui \
+                       ros-${ROS_DISTRO}-gazebo9-ros ros-${ROS_DISTRO}-kdl-conversions ros-${ROS_DISTRO}-kdl-parser \
+                       ros-${ROS_DISTRO}-forward-command-controller ros-${ROS_DISTRO}-tf-conversions \
+                       ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-joint-state-publisher ros-${ROS_DISTRO}-robot-state-publisher 
+RUN cd /root/catkin_ws && \
+    source devel/setup.bash && catkin_make

@@ -1,0 +1,89 @@
+version: '2' 
+services:
+  iiwa-stack :
+    image: iiwa_stack
+    depends_on:
+      - ros-base
+    environment:
+  # ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: tail -f /dev/null 
+
+  ros-base:
+    image: ros-docker-base
+    environment:
+  # ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: roscore
+
+
+  kinect2:
+    image: kinect2:latest
+    depends_on: 
+      - ros-base
+    environment:
+  # ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: tail -f /dev/null
+
+  gazebo:
+    image: gazebo:latest
+    depends_on:
+      - ros-base
+    environment:
+  # ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - $HOME/Dropbox/IWT/src/test/depth_sensors:/root/catkin_ws/src/depth_sensors
+      - $HOME/Dropbox/IWT/src/test/iai_robots:/root/catkin_ws/src/iai_robots
+      - $HOME/Dropbox/IWT/src/test/mybot_gazebo_tutorial:/root/catkin_ws/src/mybot_gazebo_tutorial
+      - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: tail -f /dev/null
+
