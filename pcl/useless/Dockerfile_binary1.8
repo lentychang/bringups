@@ -1,0 +1,108 @@
+ARG DOCKER_BASE_IMAGE=ros-docker-base
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+ARG NUM_OF_CORE_TO_BUILD=3
+
+
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+RUN cd /root && \
+    wget https://www.dropbox.com/s/9llzm20pc4opdn9/PCL-1.8.0-Linux.deb?dl=0 && \
+    mv PCL-1.8.0-Linux.deb?dl=0 PCL-1.8.0-Linux.deb 
+RUN cd /root && \
+    apt-get update && \
+    apt-get install -y freeglut3 libvtk6.2 libvtk6.2-qt && \
+    dpkg -i PCL-1.8.0-Linux.deb
+
+
+#RUN . /root/miniconda/etc/profile.d/conda.sh && \
+#    conda update -n base -c defaults conda && \
+#    conda create --name pcl && \
+#    conda activate pcl && \
+#    conda config --prepend channels conda-forge && \
+#    conda install -c conda-forge pcl 
+#RUN echo ". /root/miniconda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    # echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \
+    # echo "source /root/miniconda/bin/activate pcl" >> ~/.bashrc
+#    echo "conda activate pcl" >> ~/.bashrc
+
+
+
+##########################
+# install pcl1.7
+#RUN apt-get update && \
+#    apt-get install -y build-essential cmake cmake-curses-gui libboost-all-dev \
+#                       libeigen3-dev libflann-dev libglew-dev libxmu-dev \
+#                       libxmu-dev libsuitesparse-dev libqhull-dev libpcap-dev \
+#                       libxi-dev libgtest-dev
+
+#RUN apt-get install -y libvtk5-dev libvtk5-qt4-dev libqt4-opengl-dev
+# For pcl 1.8
+# RUN apt-get intall -y libvtk6-dev libqt5opengl5-dev
+
+
+#RUN cd /root && \
+#    wget http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz && \
+#    tar -xvf jdk-8u181-linux-x64.tar.gz && \
+#    mkdir -p /usr/lib/jvm/ && \
+#    cp -r jdk1.8.0_181/ /usr/lib/jvm/
+
+#RUN update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_181/bin/java" 1 && \
+#    update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_181/bin/javac" 1 && \
+#    update-alternatives --install "/usr/bin/jar" "jar" "/usr/lib/jvm/jdk1.8.0_181/bin/jar" 1 && \
+#    update-alternatives --config java && \
+#    update-alternatives --config javac && \
+#    update-alternatives --config jar
+    
+#RUN apt-get install -y python libusb-1.0-0-dev freeglut3-dev doxygen graphviz
+
+#RUN apt-get update && apt-get -y install \
+#      software-properties-common \
+#      libwayland-client0 \
+#      libset-scalar-perl \
+#      libgl1-mesa-dev \
+#      libxcursor-dev \
+#      libxi-dev \
+#      libxinerama-dev \
+#      libxrandr-dev
+
+#RUN apt-get -y install \
+#      libflann-dev \
+#      libflann1.8 \
+#      libboost-all-dev \
+#      libxt-dev \
+#      libeigen3-dev \
+#      libqhull* libqhull-dev \
+      # message passing interface parallel computing
+#      mpi-default-dev openmpi-bin openmpi-common 
+
+# Build dependency-VTK      
+#RUN cd /root && \
+#    wget http://www.vtk.org/files/release/7.1/VTK-7.1.0.tar.gz && \
+#    tar -xf VTK-7.1.0.tar.gz && \
+#    cd VTK-7.1.0 && mkdir build && cd build && \
+
+#    cmake .. && \
+#    make -j $NUM_OF_CORE_TO_BUILD && \
+#    make install
+
+# PCL install
+#RUN cd /root && \
+#    wget https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.0.tar.gz && \
+#    tar -xf pcl-1.8.0.tar.gz && \
+#    cd pcl-pcl-1.8.0 && mkdir build && cd build && \
+#    apt-get update && \
+#    apt-get -y install libopenni-dev libopenni2-dev && \
+#    cmake -DBUILD_GPU=ON .. && \
+    # latest pcl.1.8.1 already fixed compile problem with CUDA 9.0, 9.1
+#    make -j $NUM_OF_CORE_TO_BUILD && \
+#    make install
+
+#RUN cd /root && \
+#    pip install 'cython==0.25.2' && \
+#    git clone https://github.com/strawlab/python-pcl.git && \
+#    cd python-pcl && \
+#    python setup.py build && \
+#    python setup.py install 
+
+#RUN apt-get install libpcl-dev
