@@ -1,18 +1,22 @@
 version: '2'
 services:
-  kinect2:
-    image: kinect2:latest
+  moveit :
+    image: moveit:dev
     environment:
      # ROS_IP: $ROS_IP
-      ROS_MASTER_URI: $ROS_MASTER_URI
+     # ROS_MASTER_URI: $ROS_MASTER_URI
+      ROS_IP: localhost
+      ROS_MASTER_URI: "http://localhost:11311"
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
     stdin_open: true
     network_mode: host
     volumes:
-      - $HOME/exchange:/root/exchange
+      - $HOME/catkin_ws/src/exchange:/root/catkin_ws/src/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
+      - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
     privileged: true
     devices:
     - /dev/bus/usb:/dev/bus/usb

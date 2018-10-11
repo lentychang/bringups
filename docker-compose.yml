@@ -1,30 +1,10 @@
 version: '2' 
 services:
-  iiwa-stack :
-    image: iiwa_stack
-    depends_on:
-      - ros-base
-    environment:
-  # ROS_IP: $ROS_IP
-      ROS_MASTER_URI: $ROS_MASTER_URI
-      DISPLAY: :0
-      QT_X11_NO_MITSHM: '1'
-    stdin_open: true
-    network_mode: host
-    volumes:
-      - $HOME/exchange:/root/exchange
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - $HOME/.Xauthority:/root/.Xauthority
-    privileged: true
-    devices:
-      - /dev/bus/usb:/dev/bus/usb
-    tty: true
-    command: tail -f /dev/null 
 
   ros-base:
     image: ros-docker-base
     environment:
-  # ROS_IP: $ROS_IP
+      ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
@@ -34,6 +14,7 @@ services:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
+      - /etc/localtime:/etc/localtime:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
@@ -46,7 +27,7 @@ services:
     depends_on: 
       - ros-base
     environment:
-  # ROS_IP: $ROS_IP
+      ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
@@ -56,6 +37,7 @@ services:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
+      - /etc/localtime:/etc/localtime:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
@@ -63,11 +45,11 @@ services:
     command: tail -f /dev/null
 
   gazebo:
-    image: gazebo:latest
+    image: gazebo:nvidia
     depends_on:
       - ros-base
     environment:
-  # ROS_IP: $ROS_IP
+      ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
@@ -77,13 +59,67 @@ services:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
-      - $HOME/Dropbox/IWT/src/test/depth_sensors:/root/catkin_ws/src/depth_sensors
-      - $HOME/Dropbox/IWT/src/test/iai_robots:/root/catkin_ws/src/iai_robots
-      - $HOME/Dropbox/IWT/src/test/mybot_gazebo_tutorial:/root/catkin_ws/src/mybot_gazebo_tutorial
-      - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
+      - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
+        #      - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
+      - /etc/localtime:/etc/localtime:ro
+        #- /run/nvidia:/run/nvidia:shared
+     # - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
     command: tail -f /dev/null
 
+  moveit :
+    image: moveit:dev
+    environment:
+      ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+     # ROS_IP: localhost
+     # ROS_HOSTNAME: localhost
+     # ROS_MASTER_URI: "http://localhost:11311"
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true 
+    network_mode: host 
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - /etc/localtime:/etc/localtime:ro
+      - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
+    #  - nvidia_driver_384.130:/usr/local/nvidia:ro
+    privileged: true 
+    devices:
+    - /dev/bus/usb:/dev/bus/usb
+    tty: true 
+    command: tail -f /dev/null
+
+  pcl_ros :
+    image: pcl:ros
+    environment:
+      ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /home/lenty/Dropbox/IWT/src/v4r:/root/v4r                                         
+      - /home/lenty/Dropbox/IWT/src/ros_pcl:/root/catkin_ws/src/ros_pcl
+      - $HOME/.Xauthority:/root/.Xauthority
+      - /etc/localtime:/etc/localtime:ro
+    privileged: true
+    devices:
+    - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: tail -f /dev/null
+
+#version: '2'
+#volumes:
+#  nvidia_driver_384.130:
+#    external: true
