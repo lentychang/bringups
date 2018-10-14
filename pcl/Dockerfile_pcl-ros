@@ -63,3 +63,6 @@ RUN apt-get update && \
 RUN apt-get install binutils-gold && \
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20 && \
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
+
+
+RUN echo "alias catkin_make=\"catkin_make -DCMAKE_C_COMPILER=/usr/local/bin-ccache/gcc -DCMAKE_CXX_COMPILER=/usr/local/bin-ccache/g++\" " > ~/.bashrc
