@@ -5,6 +5,7 @@ ARG ROS_DISTRO=kinetic
 RUN cd /root && \
     git clone https://github.com/OpenKinect/libfreenect2.git && \
     cd libfreenect2 && \
+    apt-get update && \
     apt-get install -y build-essential software-properties-common cmake pkg-config \
       libusb-1.0-0-dev libturbojpeg libjpeg-turbo8-dev \ 
       libglfw3-dev libopenni2-dev \
@@ -31,3 +32,9 @@ RUN cd /root/catkin_ws/src/ && \
 RUN cd /root/catkin_ws && \
     source devel/setup.bash && \
     catkin_make -DCMAKE_BUILD_TYPE="Release"
+
+RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \ 
+    echo "export PS1='🐳 \e[1;32mkinect2\e[m\e[1;39m@\e[m\[\e[1;36m\]\h \[\e[1;34m\]\W\[\e[0;35m\] \[\e[1;36m\]# \[\e[0m\]'" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bashrcLocal && \
+    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='localhost:11311'" >> ~/.bashrcLocal

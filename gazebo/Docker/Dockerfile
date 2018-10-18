@@ -66,7 +66,14 @@ RUN cd /root/catkin_ws/src && \
     rm -r build && \
     source devel/setup.bash && catkin_make    
 
-RUN apt-get install -y software-properties-common && \
-    add-apt-repository ppa:graphics-drivers && \ 
-    apt-get update && \ 
-    apt-get install -y nvidia-384
+#RUN apt-get install -y software-properties-common && \
+#    add-apt-repository ppa:graphics-drivers && \ 
+#    apt-get update && \ 
+#    apt-get install -y nvidia-384
+
+RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "export PS1='🐳 \e[1;32mgazebo\e[m\e[1;39m@\e[m\[\e[1;36m\]\h \[\e[1;34m\]\W\[\e[0;35m\] \[\e[1;36m\]# \[\e[0m\]'" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bashrcLocal && \
+    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='localhost:11311'" >> ~/.bashrcLocal
+
