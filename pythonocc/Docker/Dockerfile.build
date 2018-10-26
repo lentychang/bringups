@@ -1,0 +1,45 @@
+ARG DOCKER_BASE_IMAGE=miniconda:latest
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+
+ARG V_FREETYPE=2.9.1
+ARG V_SWIG=3.0.12
+ARG V_OCE=0.18.3
+ARG N_CPU_CORE=3
+
+RUN cd /root && \ 
+    wget https://download.savannah.gnu.org/releases/freetype/freetype-$V_FREETYPE.tar.gz && \
+    tar -xvf freetype-$V_FREETYPE.tar.gz 
+
+RUN cd /root/freetype-$V_FREETYPE && \
+    ./configure && \
+    make -j$N_CPU_CORE && make install
+
+RUN cd /root && \
+    wget http://prdownloads.sourceforge.net/swig/swig-$V_SWIG.tar.gz && \
+    tar -xvf swig-$V_SWIG.tar.gz
+
+RUN apt-get install libpcre3 libpcre3-dev
+
+RUN cd /root/swig-$V_SWIG && \
+    ./configure && \
+    make -j$N_CPU_CORE && make install    
+
+RUN cd /root && \
+    wget https://github.com/tpaviot/oce/archive/OCE-$V_OCE.tar.gz && \
+    tar -xvf OCE-$V_OCE.tar.gz
+
+RUN cd /root/oce-OCE-$V_OCE && \
+    mkdir build && cd build && \
+    cmake ..
+
+RUN cd /root/oce-OCE-$V_OCE/build && \
+    make -j$N_CPU_CORE && make install
+
+RUN cd /root && \
+    git clone https://github.com/tpaviot/pythonocc-core.git && \
+    cd pythonocc-core && \
+    mkdir build && cd build && \
+    cmake .. && \
+    make -j$N_CPU_CORE && make install
+

@@ -1,0 +1,32 @@
+ARG DOCKER_BASE_IMAGE=miniconda:latest
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+
+##############################################
+       # Install other package with conda
+##############################################
+# use conda to install package us code below
+
+    # need this in order to use conda
+RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    conda create -n pythonocc  && \
+    conda install -c conda-forge -c dlr-sc -c pythonocc -c oce pythonocc-core==0.18.1 python==3.6 -n pythonocc
+
+RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    source /root/miniconda/bin/activate && \ 
+    source activate pythonocc  && \ 
+    pip install pyassimp flake8 pyyaml rospkg ipdb && \
+    conda install numpy -y -n pythonocc && \
+    conda install -c open3d-admin open3d -y -n pythonocc
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-get update && \
+    apt-get install -y flake8 libxss1
+
+RUN echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bashrcLocal && \
+    echo "export ROS_IP='172.16.17.107'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
+

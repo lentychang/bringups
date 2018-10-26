@@ -1,0 +1,26 @@
+version: '2'
+services:
+  pythonocc_tt:
+    image: pythonocc:miniconda
+    environment:
+      ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
+      DISPLAY: :0
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - $HOME/exchange:/root/exchange
+      - $HOME/exchange/fonts:/usr/share/fonts
+      - $HOME/Volume/pythonocc_example:/root/pythonocc_example
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - /usr/share/fonts/truetype/msttcorefonts:/usr/share/fonts/truetype/msttcorefonts
+      - $HOME/Dropbox/IWT/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
+    privileged: true
+    devices:
+    - /dev/bus/usb:/dev/bus/usb
+    tty: true
+    command: tail -f /dev/null 
+#    command: /bin/bash -c "ln -s /root/anaconda3/etc/profile.d/conda.sh /etc/profile.d/conda.sh" &&
+#     command: /bin/bash -c source activate pythonocc
