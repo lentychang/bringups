@@ -1,0 +1,18 @@
+ARG DOCKER_BASE_IMAGE=pcl:ide
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+ARG NUM_OF_CORE_TO_BUILD=3
+
+
+RUN cd /root/catkin_ws/src && \
+    git clone https://github.com/lentychang/ros_pcl.git
+
+
+RUN cd /root/catkin_ws && source devel/setup.bash && catkin_make -j $NUM_OF_CORE_TO_BUILD
+
+RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "export PS1='\[\e[1;32m\]$CONTAINER_NAME\[\e[m\e[1;39m\]@\[\e[m\e[1;36m\]\h\[\e[1;34m\]\W\[\e[m\]$ '" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bashrcLocal && \
+    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
+
