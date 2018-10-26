@@ -5,7 +5,7 @@ services:
     depends_on:
       - ros-base
     environment:
-  # ROS_IP: $ROS_IP
+      ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
@@ -23,5 +23,6 @@ services:
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch thesis iiwa_gazebo.launch"]
 
