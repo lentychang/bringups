@@ -1,9 +1,21 @@
 ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
+ARG ENABLE_NVIDIA=yes
 
 RUN apt-get update &&\
     apt-get -y install ros-kinetic-moveit  ros-kinetic-moveit-visual-tools && \ 
     apt-get install -y --only-upgrade ros-kinetic-* && \
     source /opt/ros/kinetic/setup.bash 
+
+RUN apt-get update && \
+    apt-get -y install ros-$ROS_DISTRO-controller-manager \
+                       ros-$ROS_DISTRO-control-toolbox \
+                       ros-$ROS_DISTRO-joint-limits-interface
+
+RUN apt-get install -y software-properties-common && \
+    if [ "$ENABLE_NVIDIA" = "yes" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
+    if [ "$ENABLE_NVIDIA" = "yes" ] ; then apt-get update ; fi && \
+    if [ "$ENABLE_NVIDIA" = "yes" ] ; then apt-get install -y nvidia-384 ; fi && \
+    if [ "$ENABLE_NVIDIA" != "yes" ] ; then echo nvidia Disabled; fi
 
