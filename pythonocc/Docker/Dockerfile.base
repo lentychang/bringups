@@ -1,6 +1,7 @@
-ARG DOCKER_BASE_IMAGE=miniconda:latest
+ARG DOCKER_BASE_IMAGE=miniconda:python3.7
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
+ARG ENABLE_NVIDIA=true
 
 ##############################################
        # Install other package with conda
@@ -24,9 +25,6 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y flake8 libxss1
 
-RUN echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc && \
-    cp ~/.bashrc ~/.bashrcLocal && \
-    echo "export ROS_IP='172.16.17.107'" >> ~/.bashrc && \
-    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
-    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
-
+RUN if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update && apt-get install -y nvidia-384 ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi

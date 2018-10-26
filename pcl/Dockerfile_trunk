@@ -60,7 +60,7 @@ RUN cd /root && \
     cd pcl-trunk && mkdir build && cd build && \
     apt-get -y install libopenni-dev libopenni2-dev && \
     cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_tools=ON .. && \
-    make -j3
+    make -j $NUM_OF_CORE_TO_BUILD
 
 RUN cd /root/pcl-trunk/build && \
     make install && \
@@ -85,7 +85,7 @@ RUN cd /root && \
 
     mkdir build && cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/freenect2 -Dfreenect2_DIR=$HOME/freenect2/lib/cmake/freenect2 -DENABLE_CXX11=ON && \
-    make -j3 && \
+    make -j $NUM_OF_CORE_TO_BUILD && \
     make install
 
 RUN apt-get -y install openni2-utils && \

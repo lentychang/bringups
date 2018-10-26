@@ -1,6 +1,7 @@
-ARG DOCKER_BASE_IMAGE=pythonocc:miniconda
+ARG DOCKER_BASE_IMAGE=pythonocc:base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
+ARG CONTAINER_NAME=pythonocc
 
 RUN cd /root && \
     apt-get update && \ 
@@ -44,9 +45,12 @@ RUN apt-get install binutils-gold && \
 
 # change [Name] to images or container name
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \ 
-    echo "export PS1='\e[1;32mpythonocc\e[m\e[1;39m@\e[m\[\e[1;36m\]\h:\[\e[1;34m\]\W\[\e[0;35m\]\[\e[0;36m\]$ \[\e[0m\]'" >> ~/.bashrc    
+    echo "export PS1='\[\e[1;32m\]$CONTAINER_NAME\[\e[m\e[1;39m\]@\[\e[m\e[1;36m\]\h \[\e[1;34m\]\W\[\e[m\]$ '" >> ~/.bashrc
 
 RUN echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \ 
     echo "source activate pythonocc" >> ~/.bashrc && \
-    echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-    echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc
+    echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bashrcLocal && \
+    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
+    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
