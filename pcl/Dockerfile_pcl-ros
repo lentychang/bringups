@@ -66,8 +66,9 @@ RUN apt-get install binutils-gold && \
 
 
 RUN echo "alias catkin_make=\"catkin_make -DCMAKE_C_COMPILER=/usr/local/bin-ccache/gcc -DCMAKE_CXX_COMPILER=/usr/local/bin-ccache/g++\" " >> ~/.bashrc
+RUN apt-get install ros-$ROS_DISTRO-tf2-sensor-msgs
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
     echo "export PS1='🐳S \e[1;32mpcl-ros\e[m\e[1;39m@\e[m\[\e[1;36m\]\h \[\e[1;34m\]\W\[\e[0;35m\] \[\e[1;36m\]# \[\e[0m\]'" >> ~/.bashrc && \
     cp ~/.bashrc ~/.bashrcLocal && \ 
     echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \                                                                                                                                  
-    echo "export ROS_MASTER_URI='localhost:11311'" >> ~/.bashrcLocal
+    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
