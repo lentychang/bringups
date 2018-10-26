@@ -91,12 +91,14 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
       - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
+      - $HOME/Dropbox/IWT/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
     #  - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch thesis_moveit_config moveit_planning_execution.launch"]
 
   pcl_ros :
     image: pcl:ros
