@@ -1,7 +1,7 @@
 version: '2'
 services:
   pcl_ros :
-    image: pcl:ros
+    image: pcl:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI

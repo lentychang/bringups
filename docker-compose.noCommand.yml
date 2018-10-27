@@ -23,8 +23,6 @@ services:
 
   gazebo:
     image: gazebo:latest
-    depends_on:
-      - ros-base
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -46,14 +44,11 @@ services:
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
-    # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis iiwa_gazebo.launch"]
+    command: tail -f /dev/null
+    # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis iiwa_gazebo.launch"]
 
   moveit :
     image: moveit:latest
-    depends_on:
-      - ros-base
-      - gazebo
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -76,14 +71,11 @@ services:
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
-    # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch"]
+    command: tail -f /dev/null
+    # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch"]
 
   pcl:
     image: pcl:latest
-    depends_on:
-      - ros-base
-      - gazebo
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -102,8 +94,8 @@ services:
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true
-    # command:
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
+    command: tail -f /dev/null
+    # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
 
 
   pythonocc:
