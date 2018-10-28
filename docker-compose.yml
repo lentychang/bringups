@@ -37,17 +37,17 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
-      - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
-        #      - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
+        # - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
       - /etc/localtime:/etc/localtime:ro
-        #- /run/nvidia:/run/nvidia:shared
-     # - nvidia_driver_384.130:/usr/local/nvidia:ro
+        # for old nvidia-docker version 1
+        # - /run/nvidia:/run/nvidia:shared
+        # - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
     # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis iiwa_gazebo.launch"]
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis_gazebo.launch"]
 
   moveit :
     image: moveit:latest
@@ -69,15 +69,14 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
       - $HOME/Dropbox/IWT/src/sim_device:/root/catkin_ws/src/sim_device
-      - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
+        # - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
       - $HOME/Dropbox/IWT/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
-    #  - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
     # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch & source ~/catkin_ws/devel/setup.bash && sleep 7 && roslaunch thesis_visualization fakeRecognition.launch"]
+    comand: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch & source ~/catkin_ws/devel/setup.bash && sleep 7 && roslaunch thesis_visualization fakeRecognition.launch"]
 
   pcl:
     image: pcl:latest
