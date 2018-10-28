@@ -9,9 +9,9 @@ RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
 
 
 RUN cd ~/catkin_ws/src && \
-    git clone https://github.com/lentychang/all_msgs.git && \
+    git clone https://github.com/lentychang/all_msgs.git
 
-RUN cd ~/catkin_ws && catkin_make
+RUN cd ~/catkin_ws && source devel/setup.bash && catkin_make
 
 RUN echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \ 
     echo "source activate pythonocc" >> ~/.bashrc && \

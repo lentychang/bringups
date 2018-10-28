@@ -3,6 +3,7 @@ FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
 
 RUN cd ~/catkin_ws/src && \
+    git clone https://github.com/lentychang/all_msgs && \
     git clone https://github.com/lentychang/sim_device.git
 
 RUN cd ~/catkin_ws && source devel/setup.bash && \

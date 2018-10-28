@@ -5,6 +5,7 @@ ARG NUM_OF_CORE_TO_BUILD=3
 ARG CONTAINER_NAME=pcl
 
 RUN cd /root/catkin_ws/src && \
+    git clone https://github.com/lentychang/all_msgs.git && \
     git clone https://github.com/lentychang/ros_pcl.git
 
 

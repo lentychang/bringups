@@ -4,6 +4,7 @@ ARG ROS_DISTRO=kinetic
 ARG ENABLE_NVDIA=yes
 
 RUN cd /root/catkin_ws/src && \
+    git clone https://github.com/lentychang/all_msgs && \
     git clone https://github.com/lentychang/sim_device.git && \
     source ~/catkin_ws/devel/setup.bash && \
     cd ~/catkin_ws && catkin_make
