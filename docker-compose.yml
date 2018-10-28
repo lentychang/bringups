@@ -101,8 +101,8 @@ services:
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true
-    # command:
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
+    # command: tail -f /dev/null
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 10 && roslaunch --wait ros_pcl dataProcessing.launch"]
 
 
   pythonocc:
@@ -125,8 +125,8 @@ services:
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
-    command: tail -f /dev/null
-
+    # command: tail -f /dev/null
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 15 && roslaunch --wait rel_pose_ext alignedModelPublisher.launch"]
 
 #version: '2'
 #volumes:
