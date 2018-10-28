@@ -76,7 +76,7 @@ services:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
     # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config thesis_rviz_movit.launch & source ~/catkin_ws/devel/setup.bash && sleep 7 && roslaunch thesis_visualization fakeRecognition.launch"]
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config thesis_rviz_movit.launch & source ~/catkin_ws/devel/setup.bash && sleep 12 && roslaunch thesis_visualization fakeRecognition.launch"]
 
   pcl:
     image: pcl:latest
