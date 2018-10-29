@@ -1,0 +1,34 @@
+ARG DOCKER_BASE_IMAGE=ros-docker-base
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+
+RUN cd /root && \
+    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh 
+RUN cd /root && \
+    /bin/bash Miniconda2-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+
+RUN echo ". /root/miniconda/etc/profile.d/conda.sh" >> ~/.bashrc
+
+RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    conda update conda -y 
+
+# Above is for image "miniconda:latest"
+##############################################
+
+
+##############################################
+       # Install other package with conda
+##############################################
+# use conda to install package us code below
+
+    # need this in order to use conda
+#RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    # create env named test
+#    conda create -n test  && \
+    # install package to an env called "test"
+#    conda install pip -n test 
+
+# Automatically activate env when enter the container
+#RUN echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \
+#    echo "source activate test" >> ~/.bashrc
+
