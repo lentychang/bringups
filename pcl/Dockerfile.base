@@ -2,7 +2,7 @@ ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
 ARG NUM_OF_CORE_TO_BUILD=3
-
+ARG ENABLE_NVIDIA=true
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -17,6 +17,11 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
     # echo "source /root/miniconda/bin/activate pcl" >> ~/.bashrc
 #    echo "conda activate pcl" >> ~/.bashrc
 
+RUN apt-get install -y software-properties-common && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi && \
+    if [ "$ENABLE_NVIDIA" != "true" ] ; then echo nvidia Disabled; fi
 
 
 ##########################

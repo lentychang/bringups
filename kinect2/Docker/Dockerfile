@@ -1,6 +1,13 @@
 ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
+ARG ENABLE_NVIDIA=true
+
+RUN apt-get install -y software-properties-common && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi && \
+    if [ "$ENABLE_NVIDIA" != "true" ] ; then echo nvidia Disabled; fi
 
 RUN cd /root && \
     git clone https://github.com/OpenKinect/libfreenect2.git && \
