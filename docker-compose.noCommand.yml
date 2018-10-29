@@ -1,7 +1,7 @@
 version: '2' 
 services:
 
-  ros-base:
+  ros-base_local:
     image: ros-docker-base
     environment:
       ROS_IP: $ROS_IP
@@ -21,7 +21,7 @@ services:
     tty: true
     command: roscore
 
-  gazebo:
+  gazebo_local:
     image: gazebo:latest
     environment:
       ROS_IP: $ROS_IP
@@ -46,7 +46,7 @@ services:
     command: tail -f /dev/null
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis_gazebo.launch"]
 
-  moveit :
+  moveit_local:
     image: moveit:latest
     environment:
       ROS_IP: $ROS_IP
@@ -72,7 +72,7 @@ services:
     command: tail -f /dev/null
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch"]
 
-  pcl:
+  pcl_local:
     image: pcl:latest
     environment:
       ROS_IP: $ROS_IP
@@ -96,7 +96,7 @@ services:
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
 
 
-  pythonocc:
+  pythonocc_tmp:
     image: pythonocc:latest
     environment:
       ROS_IP: $ROS_IP
