@@ -4,8 +4,8 @@ services:
   ros-base_local:
     image: ros-docker-base
     environment:
-      ROS_IP: $ROS_IP
-      ROS_MASTER_URI: $ROS_MASTER_URI
+      ROS_IP: 'localhost'
+      ROS_MASTER_URI: 'http://localhost:11311'
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
     stdin_open: true
@@ -95,8 +95,7 @@ services:
     command: tail -f /dev/null
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
 
-
-  pythonocc_tmp:
+  pythonocc_local:
     image: pythonocc:latest
     environment:
       ROS_IP: $ROS_IP
