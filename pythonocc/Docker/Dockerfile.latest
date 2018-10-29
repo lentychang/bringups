@@ -16,7 +16,4 @@ RUN cd ~/catkin_ws && source devel/setup.bash && catkin_make
 RUN echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \ 
     echo "source activate pythonocc" >> ~/.bashrc && \
     echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
-    echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc && \
-    cp ~/.bashrc ~/.bashrcLocal && \
-    echo "export ROS_MASTER_URI='http://172.16.17.115:11311'" >> ~/.bashrc && \
-    echo "export ROS_MASTER_URI='http://localhost:11311'" >> ~/.bashrcLocal
+    echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc
