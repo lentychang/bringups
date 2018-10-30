@@ -1,0 +1,30 @@
+ARG DOCKER_BASE_IMAGE=miniconda:python2.7
+FROM $DOCKER_BASE_IMAGE
+ARG ROS_DISTRO=kinetic
+ARG ENABLE_NVIDIA=true
+
+##############################################
+       # Install other package with conda
+##############################################
+# use conda to install package us code below
+
+    # need this in order to use conda
+RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    conda create -n pythonocc  && \
+    conda install -c conda-forge -c dlr-sc -c pythonocc -c oce pythonocc-core==0.18.1 python=2.7
+RUN export PATH="$HOME/miniconda/bin:$PATH" && \
+    source /root/miniconda/bin/activate && \ 
+    source activate pythonocc  && \ 
+    pip install pyassimp flake8 pyyaml rospkg ipdb && \
+    conda install numpy -y -n pythonocc && \
+    conda install -c open3d-admin open3d -y -n pythonocc python=2.7 && \
+    conda install flake8 -y -n pythonocc python=2.7
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-get update && \
+    apt-get install -y flake8 libxss1
+
+RUN if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update && apt-get install -y nvidia-384 ; fi && \
+    if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi
