@@ -72,7 +72,7 @@ RUN cd /root/pcl-trunk/build && \
     cd /root && \ 
     echo "export LD_LIBRARY_PATH=/root/catkin_ws/devel/lib:/opt/ros/kinetic/lib:/usr/lib:/usr/local/lib" >> ~/.bashrc && \
     echo "export CPLUS_INCLUDE_PATH=/usr/local/include/pcl-1.8:/usr/local/include/vtk-7.1:/usr/include/eigen3" >> ~/.bashrc && \
-    echo "export C_INCLUDE_PATH=$CPLUS_INCLUDE_PATH" >> ~/.bashrc && \
+    # echo "export C_INCLUDE_PATH=$CPLUS_INCLUDE_PATH" >> ~/.bashrc && \
     echo "export PATH=$PATH:/root/pcl-trunk/build/bin" >> ~/.bashrc
 
 RUN apt-get update && \

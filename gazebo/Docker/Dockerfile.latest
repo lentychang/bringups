@@ -10,6 +10,7 @@ RUN cd /root/catkin_ws/src && \
     cd ~/catkin_ws && catkin_make
 
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "export ROSCONSOLE_FORMAT='[${severity}] [${node}]: ${message}'" >> ~/.bashrc && \
     echo "export PS1='\[\e[1;32m\]gazebo\[\e[m\e[1;39m\]@\[\e[m\e[1;36m\]\h \[\e[m\e[1;34m\]\W$ \[\e[m\]'" >> ~/.bashrc 
 
 

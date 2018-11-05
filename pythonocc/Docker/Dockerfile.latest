@@ -13,7 +13,8 @@ RUN cd ~/catkin_ws/src && \
 
 RUN cd ~/catkin_ws && source devel/setup.bash && catkin_make
 
-RUN echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \ 
+RUN echo "export ROSCONSOLE_FORMAT='[${severity}] [${node}]: ${message}'" >> ~/.bashrc && \
+    echo "export PATH=/root/miniconda/bin/:$PATH" >> ~/.bashrc && \ 
     echo "source activate pythonocc" >> ~/.bashrc && \
     echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
     echo "export PYTHONPATH='/opt/ros/kinetic/lib/python2.7/dist-packages:/root/catkin_ws/devel/lib/python2.7/dist-packages'" >> ~/.bashrc

@@ -15,6 +15,8 @@ RUN cd /root && \
     dpkg -i vscode.deb  && \
     rm vscode.deb
 
+RUN ./usr/bin/python -m pip install -U flake8 --user
+
 RUN code --user-data-dir --install-extension austin.code-gnu-global && \
     code --user-data-dir --install-extension ms-vscode.cpptools && \
     code --user-data-dir --install-extension xaver.clang-format && \
@@ -22,3 +24,7 @@ RUN code --user-data-dir --install-extension austin.code-gnu-global && \
     code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
     code --user-data-dir --install-extension christian-kohler.path-intellisense && \
     code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode
+    code --user-data-dir --install-extension ms-python.python && \
+    code --user-data-dir --install-extension ajshort.ros && \
+    code --user-data-dir --install-extension smilerobotics.urdf && \
+    code --user-data-dir --install-extension ajshort.msg

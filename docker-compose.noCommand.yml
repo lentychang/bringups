@@ -4,7 +4,7 @@ services:
   ros-base_local:
     image: ros-docker-base
     environment:
-      ROS_IP: 'localhost'
+        # ROS_IP: "127.0.0.1"
       ROS_MASTER_URI: 'http://localhost:11311'
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'

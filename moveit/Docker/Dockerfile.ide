@@ -20,14 +20,12 @@ RUN code --user-data-dir --install-extension austin.code-gnu-global && \
     code --user-data-dir --install-extension twxs.cmake && \
     code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
     code --user-data-dir --install-extension christian-kohler.path-intellisense && \
-    code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode
-
-RUN code --user-data-dir --install-extension ms-python.python \
-      donjayamanne.python-extension-pack \
-      njpwerner.autodocstring \
-      ajshort.ros \
-      pijar.ros-snippets \
-      ajshort.msg
+    code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode && \
+    code --user-data-dir --install-extension ms-python.python && \
+    code --user-data-dir --install-extension ajshort.ros && \
+    code --user-data-dir --install-extension smilerobotics.urdf && \
+    code --user-data-dir --install-extension ajshort.msg && 
+    code --user-data-dir --install-extension njpwerner.autodocstring 
 
 RUN apt-get update && \ 
     apt-get install -y ccache && \                                                                            
