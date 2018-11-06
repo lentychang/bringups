@@ -13,6 +13,6 @@ docker build -t conda:python3.7 -f conda/Dockerfile.python3 .
 docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t pythonocc:base -f pythonocc/Docker/Dockerfile.base . 
 docker build -t pythonocc:ide -f pythonocc/Docker/Dockerfile.ide . 
 docker build -t pythonocc:latest -f pythonocc/Docker/Dockerfile.latest . 
-docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t pcl:base -f pcl/Dockerfile.base .
-docker build -t pcl:ide -f pcl/Dockerfile.ide .
-docker build -t pcl:latest -f pcl/Dockerfile.latest .
+docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t pcl:base -f pcl/Docker/Dockerfile.base .
+docker build -t pcl:ide -f pcl/Docker/Dockerfile.ide .
+docker build -t pcl:latest -f pcl/Docker/Dockerfile.latest .
