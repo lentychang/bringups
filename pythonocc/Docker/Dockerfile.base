@@ -1,7 +1,7 @@
 ARG DOCKER_BASE_IMAGE=miniconda:python3.7
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
-ARG ENABLE_NVIDIA=true
+ARG ENABLE_NVIDIA=false
 
 ##############################################
        # Install other package with conda

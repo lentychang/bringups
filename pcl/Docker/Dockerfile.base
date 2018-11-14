@@ -2,7 +2,7 @@ ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
 ARG NUM_OF_CORE_TO_BUILD=3
-ARG ENABLE_NVIDIA=true
+ARG ENABLE_NVIDIA=false
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -17,7 +17,7 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
     # echo "source /root/miniconda/bin/activate pcl" >> ~/.bashrc
 #    echo "conda activate pcl" >> ~/.bashrc
 
-RUN apt-get install -y software-properties-common && \
+RUN apt-get update && apt-get install -y software-properties-common && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update ; fi && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi && \
@@ -76,7 +76,7 @@ RUN cd /root/pcl-trunk/build && \
     echo "export PATH=$PATH:/root/pcl-trunk/build/bin" >> ~/.bashrc
 
 RUN apt-get update && \
-    apt-get install -y gdb
+    apt-get install -y gdb cmake-gui
 
 
 RUN cd /root && \
@@ -97,29 +97,48 @@ RUN apt-get -y install openni2-utils && \
     cd /root/libfreenect2/build && \
     make install-openni2
 
-RUN cd /root/catkin_ws/src && \
-    git clone https://github.com/ros-perception/pcl_msgs.git && \
-    git clone https://github.com/ros-perception/perception_pcl.git && \
-    git clone https://github.com/ros/geometry2.git
-RUN cd /root/catkin_ws/src/perception_pcl && \
-    rosdep update && \
-    apt-get update && \
-    apt-get install -y libbullet-dev
 
 ARG PCL_ORIGINAL_VER=1.6.2
 ARG PCL_INSTALLED_VER=1.8.1
 ARG PCL_CMAKE_VER=1.8
+
+
+RUN apt-get install -y ros-$ROS_DISTRO-tf2-sensor-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-geometry2 ros-${ROS_DISTRO}-pcl-msgs
+
+RUN cd /root/catkin_ws/src && \
+    git clone https://github.com/ros-perception/perception_pcl.git
+#    git clone https://github.com/ros/geometry2.git
 
 RUN cd /root/catkin_ws/src/perception_pcl && \
     find . -name package.xml -type f -exec sed -i "s|<version>$PCL_ORIGINAL_VER</version>|<version>${PCL_INSTALLED_VER}</version>|g" {} \; && \
     find . -name CMakeLists.txt -type f -exec sed -i "s|find_package(PCL REQUIRED|find_package(PCL $PCL_CMAKE_VER REQUIRED|g" {} \;
 
 RUN cd /root/catkin_ws && \
+#    cd pcl_conversions && mkdir build && cd build && \
+#    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/opt/ros/${ROS_DISTRO} -DPYTHON_VERSION=2.7 .. &&\
+#    make -j$NUM_OF_CORE_TO_BUILD install && \
+#    cd pcl_ros && mkdir build && cd build && \
+#    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/opt/ros/${ROS_DISTRO} -DPYTHON_VERSION=2.7 .. &&\
+#    make -j$NUM_OF_CORE_TO_BUILD install && \
+#    cd ../perception_pcl && mkdir build && cd build && \
+     source devel/setup.bash && \
+    catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/opt/ros/${ROS_DISTRO} -DPYTHON_VERSION=2.7 
+#    make -j$NUM_OF_CORE_TO_BUILD install && \
+
+#RUN cd /root/catkin_ws/src/perception_pcl && \
+#    rosdep update && \
+#    apt-get update && \
+#    apt-get install -y libbullet-dev
+RUN cd /root/catkin_ws && \
     source ./devel/setup.bash && \
     catkin_make -j$NUM_OF_CORE_TO_BUILD
 
 
-RUN apt-get install ros-$ROS_DISTRO-tf2-sensor-msgs
+RUN cd /root && mkdir git && cd git && \
+    git clone https://github.com/jbeder/yaml-cpp.git && \
+    cd yaml-cpp && mkdir build && cd build && \
+    cmake -DBUILD_SHARED_LIBS=ON .. && \
+    make -j$NUM_OF_CORE_TO_BUILD install
 
 #RUN cd /root && \
 #    pip install 'cython==0.25.2' && \

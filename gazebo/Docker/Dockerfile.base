@@ -1,7 +1,7 @@
 ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
-ARG ENABLE_NVIDIA=true
+ARG ENABLE_NVIDIA=false
 
 RUN cd /root && \ 
     curl -sSL http://get.gazebosim.org | sh
@@ -34,6 +34,9 @@ RUN cd /root/catkin_ws/src && \
 RUN cd /root/catkin_ws && \ 
     rm -r build && \
     source devel/setup.bash && catkin_make -DCMAKE_CXX_STANDARD=11 
+
+RUN apt-get update && apt-get upgrade -y && \
+    pip install --upgrade pyassimp==3.3
 
 RUN apt-get install -y software-properties-common 
 RUN if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
