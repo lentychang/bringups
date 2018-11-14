@@ -1,9 +1,16 @@
 # bringups
 ROS system bringups for simlulation env for robot assembly task
 
-## docker images
+## docker images  
+Use the rebuildAll.sh to build some of images below
 - ros  
-- pcl-trunk  
+    env for roscore
+- pcl  
+    env for ros_pcl
 - gazebo  
-- moveit  
-- iai-kinetic2  
+    env for sim_devices pkg
+- moveit 
+    env for sim_devices pkg
+- pythonocc
+    env for rel_pose_ext pkg
+- kinetic2  
