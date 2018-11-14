@@ -13,14 +13,6 @@ RUN cd /root && \
     apt -f install -y && \
     dpkg -i vscode.deb
 
-RUN code --user-data-dir --install-extension austin.code-gnu-global && \
-    code --user-data-dir --install-extension ms-vscode.cpptools && \
-    code --user-data-dir --install-extension xaver.clang-format && \ 
-    code --user-data-dir --install-extension twxs.cmake && \
-    code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
-    code --user-data-dir --install-extension christian-kohler.path-intellisense && \
-    code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode
-
 RUN apt-get update && \
     apt-get install -y ccache && \
 
@@ -33,8 +25,8 @@ RUN apt-get update && \
     ln -s $(which ccache) c++ && \
     ln -s $(which ccache) cc && \
     echo "export CCACHE_DIR=/tmp/.cache" >> ~/.bashrc && \
-    echo "export set CC=ccache gcc" >> ~/.bashrc && \
-    echo "export set CXX=\"ccache g++\"" >> ~/.bashrc && \
+    echo "export set CC='ccache gcc'" >> ~/.bashrc && \
+    echo "export set CXX='ccache g++'" >> ~/.bashrc && \
     echo "export PATH=/usr/local/bin-ccache:\$PATH" >> ~/.bashrc
 
 RUN apt-get install binutils-gold && \
@@ -43,4 +35,7 @@ RUN apt-get install binutils-gold && \
 
 
 RUN echo "alias catkin_make=\"catkin_make -DCMAKE_C_COMPILER=/usr/local/bin-ccache/gcc -DCMAKE_CXX_COMPILER=/usr/local/bin-ccache/g++\" " >> ~/.bashrc
+
+RUN apt-get update && apt-get install -y clang
+    
 

@@ -4,8 +4,8 @@ services:
   ros-base_local:
     image: ros-docker-base
     environment:
-        # ROS_IP: "127.0.0.1"
-      ROS_MASTER_URI: 'http://localhost:11311'
+      ROS_IP: $ROS_IP
+      ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
     stdin_open: true
@@ -33,11 +33,13 @@ services:
     volumes:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
       - $HOME/.Xauthority:/root/.Xauthority
       - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
       - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
+      - $HOME/.vscode/extensions:/root/.vscode/extensions   
       # - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
-      - /etc/localtime:/etc/localtime:ro
       #- /run/nvidia:/run/nvidia:shared
       # - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true
@@ -66,6 +68,8 @@ services:
       - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
       - $HOME/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
+      - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
+      - $HOME/.vscode/extensions:/root/.vscode/extensions   
     #  - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true 
     devices:
@@ -86,11 +90,12 @@ services:
     volumes:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - /home/v4r:/root/v4r                                         
-      - /home/src/ros_pcl:/root/catkin_ws/src/ros_pcl
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
+      - $HOME/src/ros_pcl:/root/catkin_ws/src/ros_pcl
+      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
+      - $HOME/.vscode/extensions:/root/.vscode/extensions
     privileged: true
     devices:
     - /dev/bus/usb:/dev/bus/usb

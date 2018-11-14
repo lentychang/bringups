@@ -1,7 +1,6 @@
 ARG DOCKER_BASE_IMAGE=gazebo:base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
-ARG ENABLE_NVDIA=yes
 
 RUN cd /root && \
     apt-get update && \
@@ -17,14 +16,3 @@ RUN cd /root && \
 
 RUN ./usr/bin/python -m pip install -U flake8 --user
 
-RUN code --user-data-dir --install-extension austin.code-gnu-global && \
-    code --user-data-dir --install-extension ms-vscode.cpptools && \
-    code --user-data-dir --install-extension xaver.clang-format && \
-    code --user-data-dir --install-extension twxs.cmake && \
-    code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
-    code --user-data-dir --install-extension christian-kohler.path-intellisense && \
-    code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode
-    code --user-data-dir --install-extension ms-python.python && \
-    code --user-data-dir --install-extension ajshort.ros && \
-    code --user-data-dir --install-extension smilerobotics.urdf && \
-    code --user-data-dir --install-extension ajshort.msg

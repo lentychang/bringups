@@ -14,19 +14,6 @@ RUN cd /root && \
     dpkg -i vscode.deb  && \
     rm vscode.deb
 
-RUN code --user-data-dir --install-extension austin.code-gnu-global && \
-    code --user-data-dir --install-extension ms-vscode.cpptools && \
-    code --user-data-dir --install-extension xaver.clang-format && \ 
-    code --user-data-dir --install-extension twxs.cmake && \
-    code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
-    code --user-data-dir --install-extension christian-kohler.path-intellisense && \
-    code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode && \
-    code --user-data-dir --install-extension ms-python.python && \
-    code --user-data-dir --install-extension ajshort.ros && \
-    code --user-data-dir --install-extension smilerobotics.urdf && \
-    code --user-data-dir --install-extension ajshort.msg && 
-    code --user-data-dir --install-extension njpwerner.autodocstring 
-
 RUN apt-get update && \ 
     apt-get install -y ccache && \                                                                            
     pushd /usr/local && \ 
@@ -38,8 +25,8 @@ RUN apt-get update && \
     ln -s $(which ccache) c++ && \ 
     ln -s $(which ccache) cc && \ 
     echo "export CCACHE_DIR=/tmp/.cache" >> ~/.bashrc && \ 
-    echo "export set CC=ccache gcc" >> ~/.bashrc && \ 
-    echo "export set CXX=\"ccache g++\"" >> ~/.bashrc && \ 
+    echo "export set CC='cache gcc'" >> ~/.bashrc && \ 
+    echo "export set CXX='cache g++'" >> ~/.bashrc && \ 
     echo "export PATH=/usr/local/bin-ccache:\$PATH" >> ~/.bashrc
 
 RUN apt-get install binutils-gold && \ 
