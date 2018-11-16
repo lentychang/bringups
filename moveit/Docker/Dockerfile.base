@@ -21,3 +21,4 @@ RUN apt-get install -y software-properties-common && \
     if [ "$ENABLE_NVIDIA"  = "true" ] ; then apt-get install -y nvidia-384 ; fi && \
     if [ "$ENABLE_NVIDIA" ! = "true" ] ; then echo nvidia Disabled; fi
 
+RUN apt-get install -y ros-$ROS_DISTRO-rqt-common-plugins

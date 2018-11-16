@@ -45,6 +45,9 @@ RUN apt-get clean && \
 
 RUN apt-get -y install bash-completion ros-$ROS_DISTRO-rviz && \
 
+ARG CONTAINER_NAME=ros-base
+
 # https://wiki.ubuntuusers.de/Bash/Prompt/
-    echo "PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'" >> /root/.bashrc
+RUN echo "export ROSCONSOLE_FORMAT='[\${severity}] [\${node}]: \${message}'" >> ~/.bashrc && \
+    echo "export PS1='\[\e[1;32m\]$CONTAINER_NAME\[\e[m\e[1;39m\]@\[\e[m\e[1;36m\]\h \[\e[1;34m\]\W\[\e[m\]$ '" >> ~/.bashrc
 
