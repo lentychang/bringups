@@ -38,17 +38,13 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority
       - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
-        # - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
       - /etc/localtime:/etc/localtime:ro
-        # for old nvidia-docker version 1
-        # - /run/nvidia:/run/nvidia:shared
-        # - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
     # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis_gazebo.launch"]
+    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis.launch"]
 
   moveit :
     image: moveit:latest
@@ -71,7 +67,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
-        # - $HOME/Dropbox/IWT/src/thesis:/root/catkin_ws/src/thesis
       - $HOME/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
     privileged: true 
     devices:
@@ -125,7 +120,6 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority
       - /usr/share/fonts/:/usr/share/fonts
       - /home/src/all_msgs:/root/catkin_ws/src/all_msgs 
-        # - $HOME/Volume/pythonocc_example:/root/pythonocc_example
       - $HOME/Dropbox/IWT/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
     privileged: true 
     devices:
@@ -133,9 +127,3 @@ services:
     tty: true 
     # command: tail -f /dev/null
     command: ["/bin/bash", "-exec", "-c", ". ~/.bashrc && source ~/catkin_ws/devel/setup.bash && roslaunch rel_pose_ext alignedModelPublisher.launch"]
- 
-
-#version: '2'
-#volumes:
-#  nvidia_driver_384.130:
-#    external: true

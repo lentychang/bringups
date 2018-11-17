@@ -39,15 +39,12 @@ services:
       - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
       - $HOME/.vscode/extensions:/root/.vscode/extensions   
-      # - $HOME/Dropbox/IWT/src/test/urdf_tutorial:/root/catkin_ws/src/urdf_tutorial
-      #- /run/nvidia:/run/nvidia:shared
-      # - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tty: true
     command: tail -f /dev/null
-    # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis_gazebo.launch"]
+    # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis.launch"]
 
   moveit_local:
     image: moveit:latest
@@ -70,7 +67,6 @@ services:
       - $HOME/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
       - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
       - $HOME/.vscode/extensions:/root/.vscode/extensions   
-    #  - nvidia_driver_384.130:/usr/local/nvidia:ro
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
