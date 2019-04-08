@@ -1,0 +1,12 @@
+#ARG DOCKER_BASE_IMAGE=ros-base:kinetic
+ARG DOCKER_BASE_IMAGE=ubuntu:bionic
+FROM $DOCKER_BASE_IMAGE
+
+ENV USER=docker
+ENV UID=1000
+ARG PW=docker
+RUN apt-get update && apt-get install -y sudo && \
+    useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd && adduser ${USER} sudo
+
+USER 1000:1000
+WORKDIR /home/${USER}
