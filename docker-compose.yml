@@ -48,9 +48,9 @@ services:
 
   moveit :
     image: moveit:latest
-    #  depends_on:
-    #  - ros-base
-    #  - gazebo
+    depends_on:
+      - ros-base
+      - gazebo
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -121,7 +121,7 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority
       - /usr/share/fonts/:/usr/share/fonts
       - /home/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/Dropbox/IWT/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
+      - $HOME/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
