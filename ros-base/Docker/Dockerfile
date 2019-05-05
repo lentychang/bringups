@@ -43,7 +43,7 @@ RUN apt-get clean && \
     cd /root/catkin_ws/src && \
     git clone https://github.com/po1/axcli.git
 
-RUN apt-get -y install bash-completion ros-$ROS_DISTRO-rviz && \
+RUN apt-get -y install bash-completion ros-$ROS_DISTRO-rviz 
 
 ARG CONTAINER_NAME=ros-base
 
