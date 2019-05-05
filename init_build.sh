@@ -1,8 +1,8 @@
 #!/bin/bash
-echo usage: bash init_build.sh \[true\|false\]
+# usage: bash init_build.sh \[true\|false\]
 echo argv\[1\] ENABLE_NVIDIA to install nvidia driver, here nvidia-384
 enable_nvidia=$1
-docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t ros-docker-base:latest -f ros_base/Docker/Dockerfile . 
+docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t ros-docker-base:latest -f ros-base/Docker/Dockerfile . 
 docker build --build-arg ENABLE_NVIDIA=$enable_nvidia -t gazebo:base -f gazebo/Docker/Dockerfile.base . 
 docker build -t gazebo:ide -f gazebo/Docker/Dockerfile.ide . 
 docker build -t gazebo:latest -f gazebo/Docker/Dockerfile.latest . 
