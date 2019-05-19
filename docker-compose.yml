@@ -36,8 +36,8 @@ services:
       - $HOME/exchange:/root/exchange
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs
+      - $HOME/src/thesis/sim_device:/root/catkin_ws/src/sim_device
       - /etc/localtime:/etc/localtime:ro
     privileged: true
     devices:
@@ -65,41 +65,41 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
-      - $HOME/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
+      - $HOME/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs
+      - $HOME/src/thesis/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/src/thesis/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
     tty: true 
     # command: tail -f /dev/null
     command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config thesis_rviz_movit.launch & source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch thesis_visualization thesis_visualization.launch"]
-  pcl:
-    image: pcl:latest
-    depends_on:
-      - ros-base
-      - gazebo
-    environment:
-      ROS_IP: $ROS_IP
-      ROS_MASTER_URI: $ROS_MASTER_URI
-      DISPLAY: :0
-      QT_X11_NO_MITSHM: '1'
-    stdin_open: true
-    network_mode: host
-    volumes:
-      - $HOME/exchange:/root/exchange
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - $HOME/.Xauthority:/root/.Xauthority
-      - /etc/localtime:/etc/localtime:ro
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/v4r:/root/v4r                                         
-      - $HOME/src/ros_pcl:/root/catkin_ws/src/ros_pcl
-    privileged: true
-    devices:
-    - /dev/bus/usb:/dev/bus/usb
-    tty: true
-    # command: tail -f /dev/null
-    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 10 && roslaunch --wait ros_pcl dataProcessing.launch"]
+    #  pcl:
+    #    image: pcl:latest
+    #    depends_on:
+    #      - ros-base
+    #      - gazebo
+    #    environment:
+    #      ROS_IP: $ROS_IP
+    #      ROS_MASTER_URI: $ROS_MASTER_URI
+    #      DISPLAY: :0
+    #      QT_X11_NO_MITSHM: '1'
+    #    stdin_open: true
+    #    network_mode: host
+    #    volumes:
+    #      - $HOME/exchange:/root/exchange
+    #      - /tmp/.X11-unix:/tmp/.X11-unix
+    #      - $HOME/.Xauthority:/root/.Xauthority
+    #      - /etc/localtime:/etc/localtime:ro
+    #      - $HOME/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs
+    #      - $HOME/src/thesis/v4r:/root/v4r
+    #      - $HOME/src/thesis/ros_pcl:/root/catkin_ws/src/ros_pcl
+    #    privileged: true
+    #    devices:
+    #    - /dev/bus/usb:/dev/bus/usb
+    #    tty: true
+    #    # command: tail -f /dev/null
+    #    command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 10 && roslaunch --wait ros_pcl dataProcessing.launch"]
 
 
   pythonocc:
@@ -120,8 +120,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - /usr/share/fonts/:/usr/share/fonts
-      - /home/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
+      - $HOME/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs
+      - $HOME/src/thesis/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb
