@@ -11,7 +11,7 @@ ARG ENABLE_NVIDIA=false
     # need this in order to use conda
 RUN export PATH="$HOME/miniconda/bin:$PATH" && \
     conda create -n pythonocc  && \
-    conda install -c conda-forge -c dlr-sc -c pythonocc -c oce pythonocc-core==0.18.1 python==3.6 -n pythonocc
+    conda install -c tpaviot -c oce -c 3dhubs -c dlr-sc -c conda-forge -c pythonocc pythonocc-core==0.18.2 python=3.6 -n pythonocc
 
 RUN export PATH="$HOME/miniconda/bin:$PATH" && \
     source /root/miniconda/bin/activate && \ 
