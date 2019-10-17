@@ -1,7 +1,7 @@
-ARG DOCKER_BASE_IMAGE=pythonocc:base
+ARG DOCKER_BASE_IMAGE=lentychang/pythonocc:base
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
-ARG CONTAINER_NAME=pythonocc
+ARG ROS_DISTRO=melodic
+ARG CONTAINER_NAME=lentychang/pythonocc
 
 RUN cd /root && \
     apt-get update && \ 
@@ -13,12 +13,12 @@ RUN cd /root && \
     apt -f install -y && \
     dpkg -i vscode.deb  && \
     rm vscode.deb
-
+RUN apt install -y libsoundio1
 RUN code --user-data-dir --install-extension austin.code-gnu-global && \
     code --user-data-dir --install-extension ms-vscode.cpptools && \
     code --user-data-dir --install-extension xaver.clang-format && \ 
     code --user-data-dir --install-extension twxs.cmake && \
-    code --user-data-dir --install-extension vector-of-bool.cmake-tools && \
+    code --user-data-dir --install-extension ms-vscode.cmake-tools && \
     code --user-data-dir --install-extension christian-kohler.path-intellisense && \
     code --user-data-dir --install-extension visualstudioexptteam.vscodeintellicode && \
     code --user-data-dir --install-extension ms-python.python && \
@@ -39,7 +39,7 @@ RUN apt-get update && \
     echo "export set CXX=\"ccache g++\"" >> ~/.bashrc && \ 
     echo "export PATH=/usr/local/bin-ccache:\$PATH" >> ~/.bashrc
 
-RUN apt-get install binutils-gold && \ 
+RUN apt-get -y install binutils-gold && \ 
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20 && \ 
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
 

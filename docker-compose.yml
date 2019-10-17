@@ -2,7 +2,7 @@ version: '2'
 services:
 
   ros-base:
-    image: ros-docker-base
+    image: lentychang/ros-base:melodic
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -22,7 +22,7 @@ services:
     command: roscore
 
   gazebo:
-    image: gazebo:latest
+    image: lentychang/gazebo:latest
     depends_on:
       - ros-base
     environment:
@@ -47,7 +47,7 @@ services:
     command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis.launch"]
 
   moveit :
-    image: moveit:latest
+    image: lentychang/moveit:latest
     depends_on:
       - ros-base
       - gazebo
@@ -103,7 +103,7 @@ services:
 
 
   pythonocc:
-    image: pythonocc:latest
+    image: lentychang/pythonocc:latest
     depends_on:
         - moveit
     environment:

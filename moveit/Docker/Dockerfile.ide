@@ -1,6 +1,6 @@
-ARG DOCKER_BASE_IMAGE=moveit:base
+ARG DOCKER_BASE_IMAGE=lentychang/moveit:base
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 RUN cd /root && \
     apt-get update && \ 
@@ -29,7 +29,7 @@ RUN apt-get update && \
     echo "export set CXX='cache g++'" >> ~/.bashrc && \ 
     echo "export PATH=/usr/local/bin-ccache:\$PATH" >> ~/.bashrc
 
-RUN apt-get install binutils-gold && \ 
+RUN apt-get install -y binutils-gold && \ 
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20 && \ 
     update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
 

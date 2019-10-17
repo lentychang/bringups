@@ -1,7 +1,7 @@
-ARG DOCKER_BASE_IMAGE=pythonocc:ide
+ARG DOCKER_BASE_IMAGE=lentychang/pythonocc:ide
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
-ARG CONTAINER_NAME=pythonocc
+ARG ROS_DISTRO=melodic
+ARG CONTAINER_NAME=lentychang/pythonocc
 
 # change [Name] to images or container name
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \ 

@@ -1,4 +1,4 @@
-ARG DOCKER_BASE_IMAGE=ros-docker-base
+ARG DOCKER_BASE_IMAGE=lentychang/ros-base:melodic
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=kinetic
 

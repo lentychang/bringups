@@ -1,10 +1,10 @@
-ARG DOCKER_BASE_IMAGE=gazebo:ide
+ARG DOCKER_BASE_IMAGE=lentychang/gazebo:ide
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 RUN cd /root/catkin_ws/src && \
     git clone https://github.com/lentychang/all_msgs && \
-    git clone https://github.com/lentychang/sim_device.git && \
+    git clone -b melodic --recurse-submodules https://github.com/lentychang/sim_device.git && \
     source ~/catkin_ws/devel/setup.bash && \
     cd ~/catkin_ws && catkin_make -DCMAKE_BUILD_TYPE=Debug
 

@@ -1,7 +1,7 @@
-ARG DOCKER_BASE_IMAGE=ros:kinetic-robot
+ARG DOCKER_BASE_IMAGE=ros:melodic-robot
 FROM $DOCKER_BASE_IMAGE
 
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -29,7 +29,6 @@ RUN apt-get clean && \
     ros-$ROS_DISTRO-rqt-tf-tree \
     ros-$ROS_DISTRO-node-manager-fkie \
     ros-$ROS_DISTRO-mongodb-store && \
-
 # create catkin_ws
     source /opt/ros/$ROS_DISTRO/setup.bash && \
     mkdir -p /root/catkin_ws/src/prj-iki-robotics && \
@@ -38,12 +37,14 @@ RUN apt-get clean && \
     cd /root/catkin_ws && \
     catkin_make && \
     echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc && \
-
 # axcli to trigger actions
     cd /root/catkin_ws/src && \
-    git clone https://github.com/po1/axcli.git
+    git clone https://github.com/po1/axcli.git && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -y install bash-completion ros-$ROS_DISTRO-rviz 
+RUN apt-get update && \
+    apt-get -y install bash-completion ros-$ROS_DISTRO-rviz && \
+     rm -rf /var/lib/apt/lists/*
 
 ARG CONTAINER_NAME=ros-base
 

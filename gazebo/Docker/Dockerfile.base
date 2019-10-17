@@ -1,14 +1,10 @@
-ARG DOCKER_BASE_IMAGE=ros-docker-base
+ARG DOCKER_BASE_IMAGE=lentychang/ros-base:melodic
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 ARG ENABLE_NVIDIA=false
 
-RUN cd /root && \ 
-    curl -sSL http://get.gazebosim.org | sh
-#RUN cd /root && \   
-#    gazebo
 RUN apt-get update && \
-    apt-get install -y ros-${ROS_DISTRO}-gazebo9-ros-pkgs ros-${ROS_DISTRO}-gazebo9-ros-control
+    apt-get install -y ros-${ROS_DISTRO}-gazebo-dev ros-${ROS_DISTRO}-gazebo-ros-pkgs ros-${ROS_DISTRO}-gazebo-ros-control
 RUN apt-get install -y ros-${ROS_DISTRO}-controller-manager ros-${ROS_DISTRO}-ompl
 RUN apt-get install -y ros-${ROS_DISTRO}-pr2-mechanism ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-ros-controllers
 RUN apt-get install -y ros-${ROS_DISTRO}-rqt-plot ros-${ROS_DISTRO}-rqt-graph \
@@ -16,7 +12,7 @@ RUN apt-get install -y ros-${ROS_DISTRO}-rqt-plot ros-${ROS_DISTRO}-rqt-graph \
 RUN apt-get install -y ros-${ROS_DISTRO}-joint-state-controller ros-${ROS_DISTRO}-joint-trajectory-controller ros-${ROS_DISTRO}-rqt \
                        ros-${ROS_DISTRO}-rqt-controller-manager ros-${ROS_DISTRO}-rqt-joint-trajectory-controller \
                        ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-rqt-gui \
-                       ros-${ROS_DISTRO}-gazebo9-ros ros-${ROS_DISTRO}-kdl-conversions ros-${ROS_DISTRO}-kdl-parser \
+                       ros-${ROS_DISTRO}-gazebo-ros ros-${ROS_DISTRO}-kdl-conversions ros-${ROS_DISTRO}-kdl-parser \
                        ros-${ROS_DISTRO}-forward-command-controller ros-${ROS_DISTRO}-tf-conversions \
                        ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-joint-state-publisher ros-${ROS_DISTRO}-robot-state-publisher 
 
@@ -27,14 +23,10 @@ RUN cd /root/catkin_ws/src && \
     git clone https://github.com/ros/robot_state_publisher.git && \
     git clone https://github.com/ros/robot_model.git && \
     git clone https://github.com/ros/urdf.git && \
-    git clone https://github.com/ros/collada_urdf.git && \
-    apt-get install -y ros-kinetic-four-wheel-steering-controller && \
+    apt-get install -y ros-${ROS_DISTRO}-four-wheel-steering-controller && \
     git clone https://github.com/ros-controls/ros_controllers.git
-
-RUN cd /root/catkin_ws && \ 
-    rm -r build && \
-    source devel/setup.bash && catkin_make -DCMAKE_CXX_STANDARD=11 
-
+    #git clone https://github.com/ros/collada_urdf.git && \
+RUN apt-get update && apt-get install -y ros-melodic-collada-urdf 
 RUN apt-get update && apt-get upgrade -y && \
     pip install --upgrade pyassimp==3.3
 
@@ -43,3 +35,6 @@ RUN if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-driv
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update && apt-get install -y nvidia-384 ; fi && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi 
 
+RUN cd /root/catkin_ws && \ 
+    rm -r build && \
+    source devel/setup.bash && catkin_make -DCMAKE_CXX_STANDARD=11 

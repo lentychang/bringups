@@ -1,6 +1,6 @@
-ARG DOCKER_BASE_IMAGE=ros-docker-base
+ARG DOCKER_BASE_IMAGE=lentychang/ros-base:melodic
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 ARG ENABLE_NVIDIA=true
 
 RUN apt-get install -y software-properties-common && \
@@ -14,11 +14,9 @@ RUN cd /root && \
     cd libfreenect2 && \
     apt-get update && \
     apt-get install -y build-essential software-properties-common cmake pkg-config \
-      libusb-1.0-0-dev libturbojpeg libjpeg-turbo8-dev \ 
-      libglfw3-dev libopenni2-dev \
-    # for intel gpu
-    beignet-dev libva-dev libjpeg-dev && \
-   
+      libusb-1.0-0-dev libturbojpeg libjpeg-turbo8-dev libturbojpeg0-dev \ 
+      libglfw3-dev libopenni2-dev && \
+    #beignet-dev libva-dev libjpeg-dev && \ # for intel gpu
     mkdir build && cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/freenect2 -Dfreenect2_DIR=$HOME/freenect2/lib/cmake/freenect2 -DENABLE_CXX11=ON && \
     make -j3 && \

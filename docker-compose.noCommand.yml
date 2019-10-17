@@ -2,7 +2,7 @@ version: '2'
 services:
 
   ros-base_local:
-    image: ros-docker-base
+    image: lentychang/ros-base:melodic
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -22,7 +22,7 @@ services:
     command: roscore
 
   gazebo_local:
-    image: gazebo:latest
+    image: lentychang/gazebo:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -35,8 +35,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - $HOME/.Xauthority:/root/.Xauthority
-      - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/catkin_ws/src/thesis/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/catkin_ws/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
       - $HOME/.vscode/extensions:/root/.vscode/extensions   
     privileged: true
@@ -47,7 +47,7 @@ services:
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis.launch"]
 
   moveit_local:
-    image: moveit:latest
+    image: lentychang/moveit:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -62,9 +62,9 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/sim_device:/root/catkin_ws/src/sim_device
-      - $HOME/src/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
+      - $HOME/catkin_ws/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/catkin_ws/src/thesis/sim_device:/root/catkin_ws/src/sim_device
+      - $HOME/catkin_ws/src/thesis/sim_device/thesis_moveit_config/config/moveit.rviz:/root/.rviz/default.rviz
       - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
       - $HOME/.vscode/extensions:/root/.vscode/extensions   
     privileged: true 
@@ -75,7 +75,7 @@ services:
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && sleep 5 && roslaunch --wait thesis_moveit_config moveit_planning_execution.launch"]
 
   pcl_local:
-    image: pcl:latest
+    image: lentychang/pcl:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
@@ -88,8 +88,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
-      - $HOME/src/ros_pcl:/root/catkin_ws/src/ros_pcl
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/catkin_ws/src/thesis/ros_pcl:/root/catkin_ws/src/ros_pcl
+      - $HOME/catkin_ws/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs 
       - $HOME/.config/Code/User/settings.json:/root/.config/Code/User/settings.json
       - $HOME/.vscode/extensions:/root/.vscode/extensions
     privileged: true
@@ -100,12 +100,13 @@ services:
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait ros_pcl dataProcessing.launch"]
 
   pythonocc_local:
-    image: pythonocc:latest
+    image: lentychang/pythonocc:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI
       DISPLAY: :0
       QT_X11_NO_MITSHM: '1'
+      TEST: $HOME/exchange   
     stdin_open: true 
     network_mode: host 
     volumes:
@@ -114,8 +115,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
       - /usr/share/fonts/:/usr/share/fonts
-      - $HOME/src/all_msgs:/root/catkin_ws/src/all_msgs 
-      - $HOME/src/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
+      - $HOME/catkin_ws/src/thesis/all_msgs:/root/catkin_ws/src/all_msgs 
+      - $HOME/catkin_ws/src/thesis/rel_pose_ext:/root/catkin_ws/src/rel_pose_ext
     privileged: true 
     devices:
     - /dev/bus/usb:/dev/bus/usb

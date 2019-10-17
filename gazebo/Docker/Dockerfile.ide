@@ -1,6 +1,6 @@
-ARG DOCKER_BASE_IMAGE=gazebo:base
+ARG DOCKER_BASE_IMAGE=lentychang/gazebo:base
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 RUN cd /root && \
     apt-get update && \

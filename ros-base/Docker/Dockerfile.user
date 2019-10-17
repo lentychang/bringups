@@ -1,4 +1,3 @@
-#ARG DOCKER_BASE_IMAGE=ros-base:kinetic
 ARG DOCKER_BASE_IMAGE=ubuntu:bionic
 FROM $DOCKER_BASE_IMAGE
 

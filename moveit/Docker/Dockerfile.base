@@ -1,12 +1,12 @@
-ARG DOCKER_BASE_IMAGE=ros-docker-base
+ARG DOCKER_BASE_IMAGE=lentychang/ros-base:melodic
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 ARG ENABLE_NVIDIA=false
 
 RUN apt-get update &&\
-    apt-get -y install ros-kinetic-moveit  ros-kinetic-moveit-visual-tools && \ 
-    apt-get install -y --only-upgrade ros-kinetic-* && \
-    source /opt/ros/kinetic/setup.bash 
+    apt-get -y install ros-${ROS_DISTRO}-moveit  ros-${ROS_DISTRO}-moveit-visual-tools && \ 
+    apt-get install -y --only-upgrade ros-${ROS_DISTRO}-* && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash 
 
 RUN apt-get update && \
     apt-get -y install ros-$ROS_DISTRO-controller-manager \

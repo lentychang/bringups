@@ -11,7 +11,7 @@ Use the rebuildAll.sh to build some of images below
 - pcl  
     env for ros_pcl
 - gazebo  
-    env for sim_devices pkg
+    simulation env for sim_devices pkg
 - moveit 
     env for sim_devices pkg
 - pythonocc
