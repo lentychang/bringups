@@ -1,6 +1,6 @@
 ARG DOCKER_BASE_IMAGE=lentychang/ros-base:melodic
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 RUN cd /root && \
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh 

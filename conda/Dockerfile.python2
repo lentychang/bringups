@@ -1,6 +1,6 @@
 ARG DOCKER_BASE_IMAGE=ros-docker-base
 FROM $DOCKER_BASE_IMAGE
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 
 RUN cd /root && \
     wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh 
