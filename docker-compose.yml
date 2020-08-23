@@ -1,4 +1,4 @@
-version: '2' 
+version: '2.3' 
 services:
 
   ros-base:
@@ -45,7 +45,7 @@ services:
     command: ["/bin/bash","-exec","-c","source /root/catkin_ws/devel/setup.bash && roslaunch thesis thesis.launch"]
 
   moveit :
-    image: lentychang/moveit:latest
+    image: lentychang/gazebo:latest
     depends_on:
       - ros-base
       - gazebo

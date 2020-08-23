@@ -4,6 +4,9 @@ ARG ROS_DISTRO=melodic
 ARG ENABLE_NVIDIA=false
 
 RUN apt-get update && \
+    apt-get install -y software-properties-common 
+
+RUN apt-get update && \
     apt-get install -y ros-${ROS_DISTRO}-gazebo-dev ros-${ROS_DISTRO}-gazebo-ros-pkgs ros-${ROS_DISTRO}-gazebo-ros-control
 RUN apt-get install -y ros-${ROS_DISTRO}-controller-manager ros-${ROS_DISTRO}-ompl
 RUN apt-get install -y ros-${ROS_DISTRO}-pr2-mechanism ros-${ROS_DISTRO}-ros-control ros-${ROS_DISTRO}-ros-controllers
@@ -26,11 +29,26 @@ RUN cd /root/catkin_ws/src && \
     apt-get install -y ros-${ROS_DISTRO}-four-wheel-steering-controller && \
     git clone https://github.com/ros-controls/ros_controllers.git
     #git clone https://github.com/ros/collada_urdf.git && \
+
+## Install Moveit
+RUN apt-get update &&\
+    apt-get -y install ros-${ROS_DISTRO}-moveit  ros-${ROS_DISTRO}-moveit-visual-tools && \ 
+    apt-get install -y --only-upgrade ros-${ROS_DISTRO}-* && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash 
+
+RUN apt-get update && \
+    apt-get -y install ros-$ROS_DISTRO-controller-manager \
+                       ros-$ROS_DISTRO-control-toolbox \
+                       ros-$ROS_DISTRO-joint-limits-interface
+## End
+
 RUN apt-get update && apt-get install -y ros-melodic-collada-urdf 
+
+RUN python -m pip install pyyaml
+
 RUN apt-get update && apt-get upgrade -y && \
     pip install --upgrade pyassimp==3.3
 
-RUN apt-get install -y software-properties-common 
 RUN if [ "$ENABLE_NVIDIA" = "true" ] ; then add-apt-repository ppa:graphics-drivers ; fi && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get update && apt-get install -y nvidia-384 ; fi && \
     if [ "$ENABLE_NVIDIA" = "true" ] ; then apt-get install -y nvidia-384 ; fi 

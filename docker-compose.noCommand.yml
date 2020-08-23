@@ -50,7 +50,7 @@ services:
     # command: ["/bin/bash", "-exec", "-c","source ~/catkin_ws/devel/setup.bash && roslaunch --wait thesis thesis.launch"]
 
   moveit_local:
-    image: lentychang/moveit:latest
+    image: lentychang/gazebo:latest
     environment:
       ROS_IP: $ROS_IP
       ROS_MASTER_URI: $ROS_MASTER_URI

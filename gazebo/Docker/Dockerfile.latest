@@ -1,4 +1,4 @@
-ARG DOCKER_BASE_IMAGE=lentychang/gazebo:ide
+ARG DOCKER_BASE_IMAGE=lentychang/gazebo:base
 FROM $DOCKER_BASE_IMAGE
 ARG ROS_DISTRO=melodic
 
@@ -13,4 +13,3 @@ RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
     echo "export PS1='\[\e[1;32m\]gazebo\[\e[m\e[1;39m\]@\[\e[m\e[1;36m\]\h \[\e[m\e[1;34m\]\W$ \[\e[m\]'" >> ~/.bashrc 
 
 RUN apt install -y libnvidia-gl-440
-
